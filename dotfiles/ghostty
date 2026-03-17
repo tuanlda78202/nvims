@@ -1,19 +1,34 @@
+# === Theme & Font ===
 theme = Everforest Dark Hard
 font-family = JetBrainsMono Nerd Font Mono
 font-thicken = true
+
+# === Readability & Contrast ===
 minimum-contrast = 1.3
+
+# === Window Appearance ===
 window-padding-x = 8
 window-padding-y = 4
+window-padding-balance = true
+
 background-opacity = 0.96
 background-blur = 10
+
 unfocused-split-opacity = 0.6
-window-padding-balance = true
+
+# === Cursor Settings ===
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+
+# === Input / UX ===
 mouse-hide-while-typing = true
+
+# === Window Size ===
 window-width = 130
 window-height = 40
+
+# === Keybindings ===
 keybind = ctrl+t=new_tab
 keybind = ctrl+tab=next_tab
 keybind = ctrl+shift+tab=previous_tab
