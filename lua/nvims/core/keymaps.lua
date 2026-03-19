@@ -22,6 +22,7 @@ keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 keymap.set("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy whole file" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<leader>u", "<C-o>", { desc = "Jump back" })
 keymap.set("n", "<leader>ch", function()
 	require("nvims.cheatsheet").toggle()
 end, { desc = "Open keymap cheatsheet" })
