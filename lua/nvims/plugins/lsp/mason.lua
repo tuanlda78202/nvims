@@ -13,6 +13,32 @@ return {
 
 		local mason_tool_installer = require("mason-tool-installer")
 
+		local lsp_servers = {
+			"ts_ls",
+			"html",
+			"cssls",
+			"tailwindcss",
+			"svelte",
+			"lua_ls",
+			"graphql",
+			"emmet_ls",
+			"prismals",
+			"pyright",
+			"clangd",
+			"pylsp",
+		}
+
+		local tools = {
+			"prettier",
+			"stylua",
+			"isort",
+			"black",
+			"pylint",
+			"eslint_d",
+			"ruff",
+			"clang-format",
+		}
+
 		mason.setup({
 			ui = {
 				icons = {
@@ -24,32 +50,15 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			ensure_installed = {
-				"ts_ls",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"svelte",
-				"lua_ls",
-				"graphql",
-				"emmet_ls",
-				"prismals",
-				"pyright",
-				"clangd",
-				"pylsp",
-			},
+			ensure_installed = lsp_servers,
 		})
 		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettier",
-				"stylua",
-				"isort",
-				"black",
-				"pylint",
-				"eslint_d",
-				"ruff",
-				"clang-format",
-			},
+			ensure_installed = tools,
 		})
+
+		vim.api.nvim_create_user_command("MasonInstallAll", function()
+			local pkgs = vim.list_extend(vim.deepcopy(lsp_servers), tools)
+			vim.cmd("MasonInstall " .. table.concat(pkgs, " "))
+		end, {})
 	end,
 }
