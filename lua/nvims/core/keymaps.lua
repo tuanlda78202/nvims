@@ -1,43 +1,75 @@
--- set leader key to space
 vim.g.mapleader = " "
 
-local keymap = vim.keymap -- for conciseness
+local keymap = vim.keymap
+local term = require("nvims.term")
 
----------------------
--- General Keymaps -------------------
--- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
+keymap.set("i", "<C-b>", "<ESC>^i", { desc = "Move beginning of line" })
+keymap.set("i", "<C-e>", "<End>", { desc = "Move end of line" })
+keymap.set("i", "<C-h>", "<Left>", { desc = "Move left" })
+keymap.set("i", "<C-l>", "<Right>", { desc = "Move right" })
+keymap.set("i", "<C-j>", "<Down>", { desc = "Move down" })
+keymap.set("i", "<C-k>", "<Up>", { desc = "Move up" })
 
--- move lines faster
 keymap.set("n", "J", "5j", { desc = "Move down 5 lines" })
 keymap.set("n", "K", "5k", { desc = "Move up 5 lines" })
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "Switch window left" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "Switch window right" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "Switch window down" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "Switch window up" })
+keymap.set("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
+keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
+keymap.set("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy whole file" })
 
--- clear search highlights (space + n + h)
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<leader>ch", function()
+	require("nvims.cheatsheet").toggle()
+end, { desc = "Open keymap cheatsheet" })
+keymap.set("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "WhichKey all keymaps" })
+keymap.set("n", "<leader>wq", function()
+	vim.cmd("WhichKey " .. vim.fn.input("WhichKey: "))
+end, { desc = "WhichKey query lookup" })
+keymap.set("n", "<leader>mi", "<cmd>MasonInstallAll<CR>", { desc = "Mason install all tools" })
 
--- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
 
--- window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
--- window navigation
 keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Move to left window" })
 keymap.set("n", "<leader>wj", "<C-w>j", { desc = "Move to bottom window" })
 keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Move to top window" })
 keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Move to right window" })
 
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
+keymap.set("n", "<Tab>", "<cmd>tabnext<CR>", { desc = "Go to next tab" })
+keymap.set("n", "<S-Tab>", "<cmd>tabprevious<CR>", { desc = "Go to previous tab" })
+keymap.set("n", "st", "<cmd>tabnext<CR>", { desc = "Go to next tab" })
+keymap.set("n", "sT", "<cmd>tabprevious<CR>", { desc = "Go to previous tab" })
 
--- terminal mode mapping
-keymap.set("t", "<C-`>", function()
-	require("snacks").terminal()
-end, { desc = "Toggle Terminal" })
+keymap.set("t", "<C-x>", "<C-\\><C-N>", { desc = "Terminal escape mode" })
+keymap.set("n", "<leader>h", function()
+	term.new({ pos = "sp" })
+end, { desc = "Terminal new horizontal term" })
+keymap.set("n", "<leader>v", function()
+	term.new({ pos = "vsp" })
+end, { desc = "Terminal new vertical term" })
+keymap.set({ "n", "t" }, "<A-v>", function()
+	term.toggle({ pos = "vsp", id = "vtoggleTerm" })
+end, { desc = "Terminal toggle vertical term" })
+keymap.set({ "n", "t" }, "<A-h>", function()
+	term.toggle({ pos = "sp", id = "htoggleTerm" })
+end, { desc = "Terminal toggle horizontal term" })
+keymap.set({ "n", "t" }, "<A-i>", function()
+	term.toggle({ pos = "float", id = "floatTerm" })
+end, { desc = "Terminal toggle floating term" })
+keymap.set("n", "<leader>pt", function()
+	term.pick()
+end, { desc = "Pick tracked terminal" })

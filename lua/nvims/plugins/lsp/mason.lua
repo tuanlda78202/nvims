@@ -1,19 +1,44 @@
 return {
 	"williamboman/mason.nvim",
+	cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall", "MasonLog" },
+	event = "VeryLazy",
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
-		-- import mason
 		local mason = require("mason")
 
-		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
 
 		local mason_tool_installer = require("mason-tool-installer")
 
-		-- enable mason and configure icons
+		local lsp_servers = {
+			"ts_ls",
+			"html",
+			"cssls",
+			"tailwindcss",
+			"svelte",
+			"lua_ls",
+			"graphql",
+			"emmet_ls",
+			"prismals",
+			"pyright",
+			"clangd",
+			"pylsp",
+		}
+
+		local tools = {
+			"prettier",
+			"stylua",
+			"isort",
+			"black",
+			"pylint",
+			"eslint_d",
+			"ruff",
+			"clang-format",
+		}
+
 		mason.setup({
 			ui = {
 				icons = {
@@ -25,33 +50,15 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
-			ensure_installed = {
-				"ts_ls",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"svelte",
-				"lua_ls",
-				"graphql",
-				"emmet_ls",
-				"prismals",
-				"pyright",
-				"clangd",
-				"pylsp",
-			},
+			ensure_installed = lsp_servers,
 		})
 		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint", --python linter
-				"eslint_d", -- js linter
-				"ruff", -- python linter and formatter
-				"clang-format", -- c/c++ formatter
-			},
+			ensure_installed = tools,
 		})
+
+		vim.api.nvim_create_user_command("MasonInstallAll", function()
+			local pkgs = vim.list_extend(vim.deepcopy(lsp_servers), tools)
+			vim.cmd("MasonInstall " .. table.concat(pkgs, " "))
+		end, {})
 	end,
 }

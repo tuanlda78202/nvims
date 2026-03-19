@@ -38,8 +38,12 @@ luac.out
 *.i*86
 *.x86_64
 *.hex
+*.log
+*.vim
+.nvimlog
 
 lazy-lock.json
 .DS_Store
 uv.lock
 pyproject.toml
+AGENTS.md
