@@ -5,7 +5,6 @@ return {
 		{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle Outline" },
 	},
 	config = function()
-		require("outline").setup({
-		})
+		require("outline").setup({})
 	end,
 }
