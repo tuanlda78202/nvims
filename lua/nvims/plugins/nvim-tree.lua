@@ -1,6 +1,7 @@
 return {
 	"nvim-tree/nvim-tree.lua",
 	dependencies = "nvim-tree/nvim-web-devicons",
+	event = "VimEnter",
 	cmd = {
 		"NvimTreeToggle",
 		"NvimTreeFocus",
@@ -15,12 +16,13 @@ return {
 		{ "<leader>ec", "<cmd>NvimTreeCollapse<CR>", desc = "Collapse file explorer" },
 		{ "<leader>er", "<cmd>NvimTreeRefresh<CR>", desc = "Refresh file explorer" },
 	},
-	config = function()
-		local nvimtree = require("nvim-tree")
-
-		-- recommended settings from nvim-tree documentation
+	init = function()
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
+	end,
+	config = function()
+		local nvimtree = require("nvim-tree")
+		local api = require("nvim-tree.api")
 
 		nvimtree.setup({
 			view = {
@@ -57,6 +59,14 @@ return {
 			git = {
 				ignore = true,
 			},
+		})
+
+		vim.api.nvim_create_autocmd("VimEnter", {
+			callback = function(data)
+				if vim.fn.isdirectory(data.file) == 1 then
+					api.tree.open()
+				end
+			end,
 		})
 	end,
 }
