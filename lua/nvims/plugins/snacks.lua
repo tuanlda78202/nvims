@@ -2,9 +2,7 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	event = "VeryLazy",
-	---@type snacks.Config
 	opts = {
-		-- Core features
 		bigfile = { enabled = true },
 		dashboard = {
 			enabled = true,
@@ -69,7 +67,6 @@ return {
          \/____/                                           \/____/                  \/____/                  \/____/         
                                                                                                                              ]],
 			},
-			-- item field formatters
 			formats = {
 				icon = function(item)
 					if item.file and item.icon == "file" or item.icon == "directory" then
@@ -96,12 +93,6 @@ return {
 			},
 			sections = {
 				{ section = "header" },
-				-- {
-				-- 	section = "terminal",
-				-- 	cmd = "chafa ~/Desktop/x.jpg --format symbols --symbols vhalf --size 150x100; sleep .1",
-				-- 	height = 18,
-				-- 	padding = 2,
-				-- },
 				{ section = "keys", gap = 1, padding = 1 },
 				{ section = "startup" },
 			},
@@ -120,7 +111,6 @@ return {
 		words = { enabled = true },
 		zen = { enabled = true },
 
-		-- Styles configuration
 		styles = {
 			notification = {
 				wo = { wrap = true },
@@ -128,7 +118,6 @@ return {
 		},
 	},
 	keys = {
-		-- File operations
 		{
 			"<leader><space>",
 			function()
@@ -151,7 +140,6 @@ return {
 			desc = "Command History",
 		},
 
-		-- Git operations
 		{
 			"<leader>gl",
 			function()
@@ -175,7 +163,6 @@ return {
 			desc = "Lazygit",
 		},
 
-		-- Terminal operations
 		{
 			"<c-`>",
 			function()
@@ -191,7 +178,6 @@ return {
 			desc = "which_key_ignore",
 		},
 
-		-- UI and notifications
 		{
 			"<leader>n",
 			function()
@@ -207,7 +193,6 @@ return {
 			desc = "Toggle Zen Mode",
 		},
 
-		-- Utilities
 		{
 			"<leader>N",
 			desc = "Neovim News",
@@ -231,7 +216,6 @@ return {
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()
-				-- Debug functions
 				_G.dd = function(...)
 					Snacks.debug.inspect(...)
 				end
@@ -240,7 +224,6 @@ return {
 				end
 				vim.print = _G.dd
 
-				-- Toggle mappings
 				Snacks.toggle.diagnostics():map("<leader>ud")
 				Snacks.toggle
 					.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
@@ -256,17 +239,16 @@ return {
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "*",
 			callback = function()
-				-- Everforest color palette
 				local colors = {
-					orange = "#e69875", -- Main orange for header
-					yellow = "#dbbc7f", -- Golden yellow
-					green = "#a7c080", -- Everforest green
-					red = "#e67e80", -- Soft red
-					purple = "#d699b6", -- Purple accent
-					blue = "#7fbbb3", -- Blue accent
-					fg = "#d3c6aa", -- Main foreground
-					bg = "#2d353b", -- Background
-					grey = "#859289", -- Muted grey
+					orange = "#e69875",
+					yellow = "#dbbc7f",
+					green = "#a7c080",
+					red = "#e67e80",
+					purple = "#d699b6",
+					blue = "#7fbbb3",
+					fg = "#d3c6aa",
+					bg = "#2d353b",
+					grey = "#859289",
 				}
 
 				vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = colors.green, bold = true })
