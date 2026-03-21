@@ -37,7 +37,7 @@ return {
 			},
 			view = {
 				side = "left",
-				width = 35,
+				width = 40,
 				relativenumber = true,
 			},
 			renderer = {
@@ -66,7 +66,7 @@ return {
 				custom = { ".DS_Store" },
 			},
 			git = {
-				ignore = true,
+				ignore = false,
 			},
 		})
 

@@ -30,7 +30,7 @@ return {
 					},
 					layout = {
 						position = "bottom",
-						ratio = 0.4,
+						ratio = 0.3,
 					},
 				},
 				filetypes = {

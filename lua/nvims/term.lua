@@ -97,11 +97,15 @@ end
 
 M.toggle = function(opts)
 	local existing = opts_to_id(opts.id)
-	opts.buf = existing and existing.buf or nil
-	if (not existing) or (not api.nvim_buf_is_valid(existing.buf)) or vim.fn.bufwinid(existing.buf) == -1 then
+	local existing_buf = existing and existing.buf or nil
+	local buf_valid = existing_buf and api.nvim_buf_is_valid(existing_buf)
+	local winid = buf_valid and vim.fn.bufwinid(existing_buf) or -1
+
+	opts.buf = buf_valid and existing_buf or nil
+	if (not existing) or not buf_valid or winid == -1 then
 		create(opts)
 	else
-		api.nvim_win_close(existing.win, true)
+		api.nvim_win_close(winid, true)
 	end
 end
 
