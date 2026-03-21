@@ -25,20 +25,6 @@ return {
 		local api = require("nvim-tree.api")
 		local function on_attach(bufnr)
 			api.config.mappings.default_on_attach(bufnr)
-
-			vim.keymap.del("n", "<CR>", { buffer = bufnr })
-			vim.keymap.set("n", "<CR>", function()
-				local node = api.tree.get_node_under_cursor()
-				if not node then
-					return
-				end
-				if node.type ~= "file" then
-					api.node.open.edit(node)
-					return
-				end
-
-				api.node.open.tab(node)
-			end, { buffer = bufnr, desc = "Open File: New Tab + Keep Explorer" })
 		end
 
 		nvimtree.setup({
@@ -50,6 +36,7 @@ return {
 				},
 			},
 			view = {
+				side = "left",
 				width = 35,
 				relativenumber = true,
 			},
@@ -68,6 +55,8 @@ return {
 			},
 			actions = {
 				open_file = {
+					quit_on_open = false,
+					resize_window = true,
 					window_picker = {
 						enable = false,
 					},
