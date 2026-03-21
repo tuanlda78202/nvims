@@ -4,24 +4,27 @@ local keymap = vim.keymap
 local term = require("nvims.term")
 local api = vim.api
 
-local function is_editable_window(win)
+local function is_navigable_window(win)
 	local buf = api.nvim_win_get_buf(win)
 	local bt = vim.bo[buf].buftype
+	if bt == "terminal" then
+		return true
+	end
 	return bt == "" and vim.bo[buf].modifiable
 end
 
-local function focus_editable_window(dir)
+local function focus_navigable_window(dir)
 	local current = api.nvim_get_current_win()
 	local wins = api.nvim_tabpage_list_wins(0)
 
 	vim.cmd("wincmd " .. dir)
-	if is_editable_window(api.nvim_get_current_win()) then
+	if is_navigable_window(api.nvim_get_current_win()) then
 		return
 	end
 
 	for _ = 1, #wins - 1 do
 		vim.cmd("wincmd " .. dir)
-		if is_editable_window(api.nvim_get_current_win()) then
+		if is_navigable_window(api.nvim_get_current_win()) then
 			return
 		end
 	end
@@ -29,19 +32,19 @@ local function focus_editable_window(dir)
 	api.nvim_set_current_win(current)
 end
 
-local function focus_any_editable_window()
+local function focus_any_navigable_window()
 	for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
-		if is_editable_window(win) then
+		if is_navigable_window(win) then
 			api.nvim_set_current_win(win)
 			return
 		end
 	end
-	vim.notify("No editable file window found", vim.log.levels.WARN)
+	vim.notify("No file or terminal window found", vim.log.levels.WARN)
 end
 
-local function term_focus_editable_window(dir)
+local function term_focus_navigable_window(dir)
 	vim.cmd("stopinsert")
-	focus_editable_window(dir)
+	focus_navigable_window(dir)
 end
 
 keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
@@ -86,35 +89,35 @@ keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
 keymap.set("n", "<leader>wh", function()
-	focus_editable_window("h")
-end, { desc = "Move to left editable window" })
+	focus_navigable_window("h")
+end, { desc = "Move to left file/terminal window" })
 keymap.set("n", "<leader>wj", function()
-	focus_editable_window("j")
-end, { desc = "Move to bottom editable window" })
+	focus_navigable_window("j")
+end, { desc = "Move to bottom file/terminal window" })
 keymap.set("n", "<leader>wk", function()
-	focus_editable_window("k")
-end, { desc = "Move to top editable window" })
+	focus_navigable_window("k")
+end, { desc = "Move to top file/terminal window" })
 keymap.set("n", "<leader>wl", function()
-	focus_editable_window("l")
-end, { desc = "Move to right editable window" })
+	focus_navigable_window("l")
+end, { desc = "Move to right file/terminal window" })
 keymap.set("t", "<leader>wh", function()
-	term_focus_editable_window("h")
-end, { desc = "Move to left editable window" })
+	term_focus_navigable_window("h")
+end, { desc = "Move to left file/terminal window" })
 keymap.set("t", "<leader>wj", function()
-	term_focus_editable_window("j")
-end, { desc = "Move to bottom editable window" })
+	term_focus_navigable_window("j")
+end, { desc = "Move to bottom file/terminal window" })
 keymap.set("t", "<leader>wk", function()
-	term_focus_editable_window("k")
-end, { desc = "Move to top editable window" })
+	term_focus_navigable_window("k")
+end, { desc = "Move to top file/terminal window" })
 keymap.set("t", "<leader>wl", function()
-	term_focus_editable_window("l")
-end, { desc = "Move to right editable window" })
+	term_focus_navigable_window("l")
+end, { desc = "Move to right file/terminal window" })
 keymap.set({ "n", "t" }, "<leader>we", function()
 	if vim.bo.buftype == "terminal" then
 		vim.cmd("stopinsert")
 	end
-	focus_any_editable_window()
-end, { desc = "Jump to any editable file window" })
+	focus_any_navigable_window()
+end, { desc = "Jump to any file/terminal window" })
 
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
