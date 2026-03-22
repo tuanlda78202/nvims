@@ -80,13 +80,37 @@ keymap.set("n", "<leader>wq", function()
 end, { desc = "WhichKey query lookup" })
 keymap.set("n", "<leader>mi", "<cmd>MasonInstallAll<CR>", { desc = "Mason install all tools" })
 
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
+local function resize_term_sidebar(delta)
+	local ft = vim.bo.filetype or ""
+	if ft:find("NvimsTerm_", 1, true) then
+		if ft:find("vsp", 1, true) then
+			vim.cmd("vertical resize " .. (delta > 0 and "+" or "") .. delta)
+		else
+			vim.cmd("resize " .. (delta > 0 and "+" or "") .. delta)
+		end
+		return
+	end
+	vim.cmd("resize " .. (delta > 0 and "+" or "") .. delta)
+end
 
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+keymap.set("n", "<leader>+", function()
+	resize_term_sidebar(3)
+end, { desc = "Increase current sidebar/split size" })
+keymap.set("n", "<leader>-", function()
+	resize_term_sidebar(-3)
+end, { desc = "Decrease current sidebar/split size" })
+keymap.set("t", "<leader>+", function()
+	vim.cmd("stopinsert")
+	resize_term_sidebar(3)
+end, { desc = "Increase current sidebar/split size" })
+keymap.set("t", "<leader>-", function()
+	vim.cmd("stopinsert")
+	resize_term_sidebar(-3)
+end, { desc = "Decrease current sidebar/split size" })
 
 keymap.set("n", "<leader>wh", function()
 	focus_navigable_window("h")
