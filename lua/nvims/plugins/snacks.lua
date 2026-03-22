@@ -182,19 +182,39 @@ return {
 		},
 
 		{
-			"<leader>N",
-			desc = "Neovim News",
+			"<leader>Nc",
+			desc = "Open common workflow notes",
 			function()
+				local common = vim.fn.stdpath("config") .. "/docs/common.md"
 				Snacks.win({
-					file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-					width = 0.6,
-					height = 0.6,
+					file = common,
+					width = 0.75,
+					height = 0.85,
 					wo = {
 						spell = false,
-						wrap = false,
-						signcolumn = "yes",
+						wrap = true,
+						signcolumn = "no",
 						statuscolumn = " ",
-						conceallevel = 3,
+						conceallevel = 2,
+					},
+				})
+			end,
+		},
+		{
+			"<leader>Nv",
+			desc = "Open Vim cheatsheet notes",
+			function()
+				local cheatsheet = vim.fn.stdpath("config") .. "/docs/vim.md"
+				Snacks.win({
+					file = cheatsheet,
+					width = 0.75,
+					height = 0.85,
+					wo = {
+						spell = false,
+						wrap = true,
+						signcolumn = "no",
+						statuscolumn = " ",
+						conceallevel = 2,
 					},
 				})
 			end,
