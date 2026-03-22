@@ -7,6 +7,10 @@ local api = vim.api
 local function is_navigable_window(win)
 	local buf = api.nvim_win_get_buf(win)
 	local bt = vim.bo[buf].buftype
+	local ft = vim.bo[buf].filetype
+	if ft == "NvimTree" then
+		return true
+	end
 	if bt == "terminal" then
 		return true
 	end
