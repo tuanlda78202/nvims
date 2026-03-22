@@ -1,5 +1,8 @@
 # Neovim Key Mapping Customization Documentation
 
+> [!caution]
+> This document is deprecated and may not reflect the current state of the configuration
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -385,12 +388,14 @@ This setup automatically loads all plugin configurations from the `lua/nvims/plu
 ### Quick Reference Summary
 
 #### Most Used Key Patterns
+
 - `<Space>` + letter = Main actions (find, explore, etc.)
 - `g` + letter = Go to operations (LSP navigation)
 - `[` / `]` + letter = Previous/Next navigation
 - `<Ctrl>` + key = Special functions (terminal toggle, etc.)
 
 #### Essential Daily Usage Keys
+
 - `<Space><Space>` - Smart Find Files
 - `<Space>ff` - Find files (Telescope)
 - `<Space>ee` - Toggle file explorer

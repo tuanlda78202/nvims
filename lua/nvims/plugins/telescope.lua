@@ -3,7 +3,6 @@ return {
 	branch = "0.1.x",
 	cmd = "Telescope",
 	keys = {
-		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Fuzzy find files in cwd" },
 		{
 			"<leader>fa",
 			"<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
