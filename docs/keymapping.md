@@ -174,8 +174,8 @@ My leader key is set to **Space** (`" "`), which is a popular choice for modern 
 
 | Key Combination | Mode | Action | Description |
 |---|---|---|---|
-| `<Space>z` | Normal | `Snacks.zen()` | Toggle Zen Mode |
-| `<Space>N` | Normal | `Snacks.win()` | Show Neovim News |
+| `<Space>Nc` | Normal | `Snacks.win()` | Open `docs/common.md` workflow notes |
+| `<Space>Nv` | Normal | `Snacks.win()` | Open `docs/vim.md` cheatsheet |
 
 #### Toggle Features
 
@@ -406,7 +406,6 @@ This setup automatically loads all plugin configurations from the `lua/nvims/plu
 - `gd` - Go to definition
 - `<Space>ca` - Code actions
 - `<Space>nh` - Clear highlights
-- `<Space>z` - Toggle Zen Mode
 - `jk` - Exit insert mode
 - `<Space>gl` - Git log picker
 - `<Space>gg` - Lazygit

@@ -115,7 +115,7 @@ return {
 			scroll = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
-			zen = { enabled = true },
+			zen = { enabled = false },
 
 			styles = {
 				notification = {
@@ -171,14 +171,6 @@ return {
 				Snacks.lazygit()
 			end,
 			desc = "Lazygit",
-		},
-
-		{
-			"<leader>z",
-			function()
-				Snacks.zen()
-			end,
-			desc = "Toggle Zen Mode",
 		},
 
 		{
